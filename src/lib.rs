@@ -21,7 +21,7 @@ mod rbf;
 mod utils;
 
 pub use self::bbox::Bbox;
-pub use self::rbf::{Rbf, rbf_interpolation};
+pub use self::rbf::{Rbf, rbf_interpolation, DistanceFunction};
 pub use self::utils::PtValue;
 
 #[cfg(test)]

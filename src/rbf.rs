@@ -5,6 +5,16 @@ use rulinalg::matrix::Matrix;
 use rulinalg::vector::Vector;
 use num_traits::{Float, Zero, FromPrimitive};
 
+#[derive(Debug, Clone, Copy, Eq, PartialEq)]
+pub enum DistanceFunction {
+    Linear,
+    Cubic,
+    ThinPlate,
+    Quintic,
+    Gaussian,
+    MultiQuadratic,
+    InverseMultiQuadratic,
+}
 
 #[derive(Debug, Clone)]
 pub struct Rbf<'a, T: 'a> {
@@ -17,19 +27,19 @@ pub struct Rbf<'a, T: 'a> {
 impl<'a, T> Rbf<'a, T>
     where T: Float + Zero + FromPrimitive + 'static
 {
-    pub fn new(obs_points: &'a [PtValue<T>], distance_function: &str, epsilon: Option<T>) -> Self {
+    pub fn new(obs_points: &'a [PtValue<T>], distance_function: DistanceFunction, epsilon: Option<T>) -> Self {
         let distance_func = match distance_function {
-            "linear" => distance_linear,
-            "cubic" => distance_cubic,
-            "thin_plate" => distance_thin_plate,
-            "quintic" => distance_quintic,
-            "gaussian" => distance_gaussian,
-            "multiquadratic" => distance_multiquadratic,
-            "inverse_multiquadratic" => distance_inverse_multiquadratic,
-            &_ => panic!("Invalid function name!"),
+            DistanceFunction::Linear => distance_linear,
+            DistanceFunction::Cubic => distance_cubic,
+            DistanceFunction::ThinPlate => distance_thin_plate,
+            DistanceFunction::Quintic => distance_quintic,
+            DistanceFunction::Gaussian => distance_gaussian,
+            DistanceFunction::MultiQuadratic => distance_multiquadratic,
+            DistanceFunction::InverseMultiQuadratic => distance_inverse_multiquadratic,
         };
         let nb_pts = obs_points.len();
         let mut mat = vec![Zero::zero(); nb_pts * nb_pts];
+
         for j in 0..nb_pts {
             for i in 0..nb_pts {
                 mat[j * nb_pts + i] = _norm(&obs_points[i], &obs_points[j]);
@@ -85,7 +95,7 @@ pub fn rbf_interpolation<T>(reso_x: u32,
                             reso_y: u32,
                             bbox: &Bbox<T>,
                             obs_points: &[PtValue<T>],
-                            func_name: &str,
+                            func_name: DistanceFunction,
                             epsilon: Option<T>)
                             -> Result<Vec<PtValue<T>>>
     where T: Float + Zero + FromPrimitive + 'static

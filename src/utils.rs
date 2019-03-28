@@ -36,3 +36,16 @@ impl<T> PtValue<T>
         (self.x, self.y, self.value)
     }
 }
+
+impl<T> From<nalgebra::Vector3<T>> for PtValue<T>
+    where T: 'static + Float + std::fmt::Debug
+{
+    fn from(v: nalgebra::Vector3<T>) -> Self {
+        Self {
+            x: v.x,
+            y: v.y,
+            value: v.z,
+        }
+    }
+}
+

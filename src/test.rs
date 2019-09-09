@@ -23,7 +23,7 @@ mod test {
                            Pt::new(0.0, 100.0, 6.0),
                            Pt::new(75.0, 25.0, 3.1),
                            Pt::new(100.0, 75.0, 7.4)];
-        let rbf = Rbf::new(&obs_pts, "linear", None);
+        let rbf = Rbf::new(&obs_pts, DistanceFunction::Linear, None);
         assert_eq!(true,
                    almost_equal(2.843937337, rbf.interp_point((0.0, 50.0)), 0.0000001));
         assert_eq!(true,
@@ -36,7 +36,7 @@ mod test {
                            Pt::new(0.0, 100.0, 6.0),
                            Pt::new(75.0, 25.0, 3.1),
                            Pt::new(100.0, 75.0, 7.4)];
-        let rbf = Rbf::new(&obs_pts, "cubic", None);
+        let rbf = Rbf::new(&obs_pts, DistanceFunction::Cubic, None);
         assert_eq!(true,
                    almost_equal(0.554789362, rbf.interp_point((0.0, 50.0)), 0.0000001));
         assert_eq!(true,
@@ -49,7 +49,7 @@ mod test {
                            Pt::new(0.0, 100.0, 6.0),
                            Pt::new(75.0, 25.0, 3.1),
                            Pt::new(100.0, 75.0, 7.4)];
-        let rbf = Rbf::new(&obs_pts, "gaussian", None);
+        let rbf = Rbf::new(&obs_pts, DistanceFunction::Gaussian, None);
         assert_eq!(true,
                    almost_equal(3.494929342, rbf.interp_point((0.0, 50.0)), 0.0000001));
         assert_eq!(true,

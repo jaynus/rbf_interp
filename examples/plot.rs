@@ -2,7 +2,7 @@ extern crate gnuplot;
 extern crate rbf_interp;
 
 use gnuplot::*;
-use rbf_interp::{rbf_interpolation, Bbox, PtValue};
+use rbf_interp::{rbf_interpolation, Bbox, PtValue, DistanceFunction};
 
 type Pt = PtValue<f64>;
 
@@ -14,7 +14,7 @@ fn example(c: Common) {
                                     reso_y,
                                     &bbox,
                                     &obs_points_two_stocks,
-                                    "inverse_multiquadratic",
+                                    DistanceFunction::InverseMultiQuadratic,
                                     Some(1.66))
             .unwrap();
     let mut z1 = Vec::with_capacity(res_rbf.len());
@@ -44,7 +44,7 @@ fn example(c: Common) {
                                     reso_y,
                                     &bbox,
                                     &obs_points_two_stocks,
-                                    "gaussian",
+                                    DistanceFunction::Gaussian,
                                     Some(1.66))
             .unwrap();
     let mut z1 = Vec::with_capacity(res_rbf.len());
